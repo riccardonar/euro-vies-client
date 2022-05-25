@@ -9,29 +9,29 @@ class CheckVatOutput
 {
 
     /**
-     * @property \GoetasWebservices\Client\EuroVies\Types\CheckVatResponse $parameters
+     * @var \GoetasWebservices\Client\EuroVies\Types\CheckVatResponse $checkVatResponse
      */
-    private $parameters = null;
+    private $checkVatResponse = null;
 
     /**
-     * Gets as parameters
+     * Gets as checkVatResponse
      *
      * @return \GoetasWebservices\Client\EuroVies\Types\CheckVatResponse
      */
-    public function getParameters()
+    public function getCheckVatResponse()
     {
-        return $this->parameters;
+        return $this->checkVatResponse;
     }
 
     /**
-     * Sets a new parameters
+     * Sets a new checkVatResponse
      *
-     * @param \GoetasWebservices\Client\EuroVies\Types\CheckVatResponse $parameters
+     * @param \GoetasWebservices\Client\EuroVies\Types\CheckVatResponse $checkVatResponse
      * @return self
      */
-    public function setParameters(\GoetasWebservices\Client\EuroVies\Types\CheckVatResponse $parameters)
+    public function setCheckVatResponse(\GoetasWebservices\Client\EuroVies\Types\CheckVatResponse $checkVatResponse)
     {
-        $this->parameters = $parameters;
+        $this->checkVatResponse = $checkVatResponse;
         return $this;
     }
 

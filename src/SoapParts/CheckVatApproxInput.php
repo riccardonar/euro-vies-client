@@ -9,29 +9,29 @@ class CheckVatApproxInput
 {
 
     /**
-     * @property \GoetasWebservices\Client\EuroVies\Types\CheckVatApprox $parameters
+     * @var \GoetasWebservices\Client\EuroVies\Types\CheckVatApprox $checkVatApprox
      */
-    private $parameters = null;
+    private $checkVatApprox = null;
 
     /**
-     * Gets as parameters
+     * Gets as checkVatApprox
      *
      * @return \GoetasWebservices\Client\EuroVies\Types\CheckVatApprox
      */
-    public function getParameters()
+    public function getCheckVatApprox()
     {
-        return $this->parameters;
+        return $this->checkVatApprox;
     }
 
     /**
-     * Sets a new parameters
+     * Sets a new checkVatApprox
      *
-     * @param \GoetasWebservices\Client\EuroVies\Types\CheckVatApprox $parameters
+     * @param \GoetasWebservices\Client\EuroVies\Types\CheckVatApprox $checkVatApprox
      * @return self
      */
-    public function setParameters(\GoetasWebservices\Client\EuroVies\Types\CheckVatApprox $parameters)
+    public function setCheckVatApprox(\GoetasWebservices\Client\EuroVies\Types\CheckVatApprox $checkVatApprox)
     {
-        $this->parameters = $parameters;
+        $this->checkVatApprox = $checkVatApprox;
         return $this;
     }
 

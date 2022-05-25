@@ -18,35 +18,31 @@ use Symfony\Component\DependencyInjection\ParameterBag\FrozenParameterBag;
  */
 class SoapContainer extends Container
 {
-    private $parameters;
-    private $targetDirs = array();
+    private $parameters = [];
+    private $targetDirs = [];
 
     public function __construct()
     {
         $this->parameters = $this->getDefaultParameters();
 
-        $this->services = array();
-        $this->methodMap = array(
-            'goetas_webservices.soap_client.metadata_reader' => 'getGoetasWebservices_SoapClient_MetadataReaderService',
-        );
-        $this->privates = array(
-            'goetas_webservices.soap_client.metadata_reader' => true,
-        );
-
-        $this->aliases = array();
+        $this->services = [];
+        $this->methodMap = [
+            'goetas_webservices.soap.metadata_loader.array' => 'getGoetasWebservices_Soap_MetadataLoader_ArrayService',
+        ];
+        $this->aliases = [
+            'goetas_webservices.soap.metadata_reader' => 'goetas_webservices.soap.metadata_loader.array',
+        ];
     }
 
     public function getRemovedIds()
     {
-        return array(
+        return [
             'Psr\\Container\\ContainerInterface' => true,
             'Symfony\\Component\\DependencyInjection\\ContainerInterface' => true,
-            'goetas_webservices.soap_client.metadata.generator' => true,
-            'goetas_webservices.soap_client.metadata_loader.array' => true,
-            'goetas_webservices.soap_client.metadata_loader.dev' => true,
-            'goetas_webservices.soap_client.metadata_reader' => true,
-            'goetas_webservices.soap_client.stub.class_writer' => true,
-            'goetas_webservices.soap_client.stub.client_generator' => true,
+            'goetas_webservices.soap.metadata.generator' => true,
+            'goetas_webservices.soap.metadata_loader.dev' => true,
+            'goetas_webservices.soap.stub.class_writer' => true,
+            'goetas_webservices.soap.stub.client_generator' => true,
             'goetas_webservices.wsdl2php.converter.jms' => true,
             'goetas_webservices.wsdl2php.converter.php' => true,
             'goetas_webservices.wsdl2php.event_dispatcher' => true,
@@ -67,7 +63,7 @@ class SoapContainer extends Container
             'goetas_webservices.xsd2php.writer.jms' => true,
             'goetas_webservices.xsd2php.writer.php' => true,
             'logger' => true,
-        );
+        ];
     }
 
     public function compile()
@@ -88,13 +84,13 @@ class SoapContainer extends Container
     }
 
     /*
-     * Gets the private 'goetas_webservices.soap_client.metadata_reader' shared service.
+     * Gets the public 'goetas_webservices.soap.metadata_loader.array' shared service.
      *
-     * @return \GoetasWebservices\SoapServices\SoapClient\Metadata\Loader\ArrayMetadataLoader
+     * @return \GoetasWebservices\SoapServices\Metadata\Loader\ArrayMetadataLoader
      */
-    protected function getGoetasWebservices_SoapClient_MetadataReaderService()
+    protected function getGoetasWebservices_Soap_MetadataLoader_ArrayService()
     {
-        return $this->services['goetas_webservices.soap_client.metadata_reader'] = new \GoetasWebservices\SoapServices\SoapClient\Metadata\Loader\ArrayMetadataLoader($this->parameters['goetas_webservices.soap_client.metadata']);
+        return $this->services['goetas_webservices.soap.metadata_loader.array'] = new \GoetasWebservices\SoapServices\Metadata\Loader\ArrayMetadataLoader($this->parameters['goetas_webservices.soap.metadata']);
     }
 
     public function getParameter($name)
@@ -140,13 +136,13 @@ class SoapContainer extends Container
         return $this->parameterBag;
     }
 
-    private $loadedDynamicParameters = array();
-    private $dynamicParameters = array();
+    private $loadedDynamicParameters = [];
+    private $dynamicParameters = [];
 
     /*
      * Computes a dynamic parameter.
      *
-     * @param string The name of the dynamic parameter to load
+     * @param string $name The name of the dynamic parameter to load
      *
      * @return mixed The value of the dynamic parameter
      *
@@ -157,7 +153,7 @@ class SoapContainer extends Container
         throw new InvalidArgumentException(sprintf('The dynamic parameter "%s" must be defined.', $name));
     }
 
-    private $normalizedParameterNames = array();
+    private $normalizedParameterNames = [];
 
     private function normalizeParameterName($name)
     {
@@ -180,102 +176,100 @@ class SoapContainer extends Container
      */
     protected function getDefaultParameters()
     {
-        return array(
-            'goetas_webservices.soap_client.metadata' => array(
-                'http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl' => array(
-                    'checkVatService' => array(
-                        'checkVatPort' => array(
-                            'operations' => array(
-                                'checkVat' => array(
+        return [
+            'goetas_webservices.soap.metadata' => [
+                'http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl' => [
+                    'checkVatService' => [
+                        'checkVatPort' => [
+                            'operations' => [
+                                'checkVat' => [
                                     'action' => NULL,
                                     'style' => 'rpc',
                                     'version' => '1.1',
                                     'name' => 'checkVat',
                                     'method' => 'checkVat',
-                                    'input' => array(
+                                    'input' => [
                                         'message_fqcn' => 'GoetasWebservices\\Client\\EuroVies\\SoapEnvelope\\Messages\\CheckVatInput',
                                         'headers_fqcn' => 'GoetasWebservices\\Client\\EuroVies\\SoapEnvelope\\Headers\\CheckVatInput',
                                         'part_fqcn' => 'GoetasWebservices\\Client\\EuroVies\\SoapParts\\CheckVatInput',
-                                        'parts' => array(
-                                            'parameters' => 'CheckVat',
-                                        ),
-                                    ),
-                                    'output' => array(
+                                        'parts' => [
+                                            'checkVat' => 'CheckVat',
+                                        ],
+                                    ],
+                                    'output' => [
                                         'message_fqcn' => 'GoetasWebservices\\Client\\EuroVies\\SoapEnvelope\\Messages\\CheckVatOutput',
                                         'headers_fqcn' => 'GoetasWebservices\\Client\\EuroVies\\SoapEnvelope\\Headers\\CheckVatOutput',
                                         'part_fqcn' => 'GoetasWebservices\\Client\\EuroVies\\SoapParts\\CheckVatOutput',
-                                        'parts' => array(
-                                            'parameters' => 'CheckVatResponse',
-                                        ),
-                                    ),
-                                    'fault' => array(
+                                        'parts' => [
+                                            'checkVatResponse' => 'CheckVatResponse',
+                                        ],
+                                    ],
+                                    'fault' => [
 
-                                    ),
-                                ),
-                                'checkVatApprox' => array(
+                                    ],
+                                ],
+                                'checkVatApprox' => [
                                     'action' => NULL,
                                     'style' => 'rpc',
                                     'version' => '1.1',
                                     'name' => 'checkVatApprox',
                                     'method' => 'checkVatApprox',
-                                    'input' => array(
+                                    'input' => [
                                         'message_fqcn' => 'GoetasWebservices\\Client\\EuroVies\\SoapEnvelope\\Messages\\CheckVatApproxInput',
                                         'headers_fqcn' => 'GoetasWebservices\\Client\\EuroVies\\SoapEnvelope\\Headers\\CheckVatApproxInput',
                                         'part_fqcn' => 'GoetasWebservices\\Client\\EuroVies\\SoapParts\\CheckVatApproxInput',
-                                        'parts' => array(
-                                            'parameters' => 'CheckVatApprox',
-                                        ),
-                                    ),
-                                    'output' => array(
+                                        'parts' => [
+                                            'checkVatApprox' => 'CheckVatApprox',
+                                        ],
+                                    ],
+                                    'output' => [
                                         'message_fqcn' => 'GoetasWebservices\\Client\\EuroVies\\SoapEnvelope\\Messages\\CheckVatApproxOutput',
                                         'headers_fqcn' => 'GoetasWebservices\\Client\\EuroVies\\SoapEnvelope\\Headers\\CheckVatApproxOutput',
                                         'part_fqcn' => 'GoetasWebservices\\Client\\EuroVies\\SoapParts\\CheckVatApproxOutput',
-                                        'parts' => array(
-                                            'parameters' => 'CheckVatApproxResponse',
-                                        ),
-                                    ),
-                                    'fault' => array(
+                                        'parts' => [
+                                            'checkVatApproxResponse' => 'CheckVatApproxResponse',
+                                        ],
+                                    ],
+                                    'fault' => [
 
-                                    ),
-                                ),
-                            ),
+                                    ],
+                                ],
+                            ],
                             'unwrap' => false,
                             'endpoint' => 'http://ec.europa.eu/taxation_customs/vies/services/checkVatService',
-                        ),
-                    ),
-                ),
-            ),
-            'goetas_webservices.soap_client.config' => array(
-                'namespaces' => array(
+                            'version' => '1.1',
+                        ],
+                    ],
+                ],
+            ],
+            'goetas_webservices.soap.config' => [
+                'namespaces' => [
                     'urn:ec.europa.eu:taxud:vies:services:checkVat' => 'GoetasWebservices\\Client\\EuroVies',
                     'urn:ec.europa.eu:taxud:vies:services:checkVat:types' => 'GoetasWebservices\\Client\\EuroVies\\Types',
-                ),
-                'destinations_php' => array(
+                ],
+                'destinations_php' => [
                     'GoetasWebservices\\Client\\EuroVies' => 'src',
-                ),
-                'destinations_jms' => array(
+                ],
+                'destinations_jms' => [
                     'GoetasWebservices\\Client\\EuroVies' => 'metadata',
-                ),
-                'metadata' => array(
+                ],
+                'metadata' => [
                     'http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl' => NULL,
-                ),
-                'alternative_endpoints' => array(
+                ],
+                'alternative_endpoints' => [
 
-                ),
+                ],
                 'unwrap_returns' => false,
                 'naming_strategy' => 'short',
                 'path_generator' => 'psr4',
-                'known_locations' => array(
+                'known_locations' => [
 
-                ),
-                'aliases' => array(
+                ],
+                'aliases' => [
 
-                ),
-                'headers' => '\\SoapEnvelope\\Headers',
-                'parts' => '\\SoapEnvelope\\Parts',
-                'messages' => '\\SoapEnvelope\\Messages',
-            ),
-            'goetas_webservices.soap_client.unwrap_returns' => false,
-        );
+                ],
+            ],
+            'goetas_webservices.soap.unwrap_returns' => false,
+        ];
     }
 }

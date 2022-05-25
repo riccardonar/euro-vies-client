@@ -5,16 +5,16 @@ namespace GoetasWebservices\Client\EuroVies\SoapEnvelope\Messages;
 /**
  * Class representing CheckVatApproxInput
  */
-class CheckVatApproxInput
+class CheckVatApproxInput implements \GoetasWebservices\SoapServices\Metadata\Envelope\Envelope
 {
 
     /**
-     * @property \GoetasWebservices\Client\EuroVies\SoapParts\CheckVatApproxInput $body
+     * @var \GoetasWebservices\Client\EuroVies\SoapParts\CheckVatApproxInput $body
      */
     private $body = null;
 
     /**
-     * @property \GoetasWebservices\SoapServices\SoapClient\Arguments\Headers\Handler\HeaderPlaceholder $header
+     * @var \GoetasWebservices\Client\EuroVies\SoapEnvelope\Headers\CheckVatApproxInput $header
      */
     private $header = null;
 
@@ -43,7 +43,7 @@ class CheckVatApproxInput
     /**
      * Gets as header
      *
-     * @return \GoetasWebservices\SoapServices\SoapClient\Arguments\Headers\Handler\HeaderPlaceholder
+     * @return \GoetasWebservices\Client\EuroVies\SoapEnvelope\Headers\CheckVatApproxInput
      */
     public function getHeader()
     {
@@ -53,10 +53,10 @@ class CheckVatApproxInput
     /**
      * Sets a new header
      *
-     * @param \GoetasWebservices\SoapServices\SoapClient\Arguments\Headers\Handler\HeaderPlaceholder $header
+     * @param \GoetasWebservices\Client\EuroVies\SoapEnvelope\Headers\CheckVatApproxInput $header
      * @return self
      */
-    public function setHeader(\GoetasWebservices\SoapServices\SoapClient\Arguments\Headers\Handler\HeaderPlaceholder $header)
+    public function setHeader(\GoetasWebservices\Client\EuroVies\SoapEnvelope\Headers\CheckVatApproxInput $header)
     {
         $this->header = $header;
         return $this;

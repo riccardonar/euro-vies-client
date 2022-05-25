@@ -1,13 +1,13 @@
 GoetasWebservices\Client\EuroVies\SoapParts\CheckVatOutput:
     xml_root_namespace: 'urn:ec.europa.eu:taxud:vies:services:checkVat'
     properties:
-        parameters:
+        checkVatResponse:
             expose: true
             access_type: public_method
-            accessor:
-                getter: getParameters
-                setter: setParameters
             xml_element:
                 namespace: 'urn:ec.europa.eu:taxud:vies:services:checkVat:types'
+            accessor:
+                getter: getCheckVatResponse
+                setter: setCheckVatResponse
             serialized_name: checkVatResponse
             type: GoetasWebservices\Client\EuroVies\Types\CheckVatResponse
